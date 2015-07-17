@@ -1,42 +1,96 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World!</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+    <link href="styles/darkroom.css" rel="stylesheet" />
+    <link href="styles/main.css" rel="stylesheet" />
+    <link href="styles/logoimages.css" rel="stylesheet" />
+    <script src="cordova.js"></script>
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/kendo.mobile.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+    <script src="scripts/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="caman/dist/caman.full.min.js"></script>
+    <script src="scripts/fabric.js"></script>
+    <script src="scripts/darkroom.js"></script>
+</head>
+
+<body>
+    <!--Camera View-->
+    <div id="tabstrip-home" data-role="view" data-title="Home">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+                <a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Flat</a>
+            </div>
+        </header>
+        <a data-role="button" href="" id="capturePhotoButton">Take Photo</a>
+        <a data-role="button" href="" id="capturePhotoEditButton">Edit Photo (iOS only)</a>
+        <a data-role="button" href="" id="getPhotoFromLibraryButton">from Pht Lib</a>
+        <a data-role="button" href="" id="getPhotoFromAlbumButton">from Pht Alb</a>
+        <div class="results">
+            <div class="desc"></div>
+            <img style="display:none;margin:25px auto; width:120px; height:120px;" id="smallImage" src="" />
+        </div>
+        <div class="separator"></div>
+    </div>
+    <!--Luz View-->
+    <div id="tabstrip-luz" data-role="view" data-title="Luz">
+        <div class="logo-image"></div>
+        <div style="padding: 20px 20px 20px 20px;">
+            <input type="range" name="brightness" id="brightness" min="-100" max="100" step="1" value="0" style="width:70%;" />
+        </div>
+        <img style="margin:25px auto; width:100%; height: auto;" id="target" src="imagem.jpg" />
+    </div>
+    <!--Crop View-->
+    <div id="tabstrip-crop" data-role="view" data-title="Crop">
+        <div style="margin-top: 25%;">
+            <img width="80%" height="auto" src="imagem.jpg" id="imgc">
+            <script>
+                var dkrm = new Darkroom('#imgc', {
+                    plugins: {
+                        save: true,
+                        crop: {
+                            quickCropKey: 13
+                        }
+                    },
+                    init: function () {}
+                });
+            </script>
+        </div>
+    </div>
+    <!--Sobre View-->
+    <div id="tabstrip-sobre" data-role="view" data-title="Sobre">
+        <div style="margin-top: 25%; text-align: center;">
+            Edu
+        </div>
+    </div>
+    <!--Layout-->
+    <div data-role="layout" data-id="tabstrip-layout">
+        <!--Header-->
+        <div data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
             </div>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-    </body>
+        <!--Footer-->
+        <div data-role="footer">
+            <div data-role="tabstrip">
+                <a href="#/" data-icon="camera">Camera</a>
+                <a href="#tabstrip-luz" data-icon="toprated">Luz</a>
+                <a href="#tabstrip-crop" data-icon="action">Crop</a>
+                <a href="#tabstrip-sobre" data-icon="globe">Sobre</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('deviceready', function () {
+            feedback.initialize('9c2dc820-03b8-11e5-a72d-fb45c679553f');
+        });
+    </script>
+</body>
+
 </html>
